@@ -27,7 +27,7 @@
 <body>
   <h1>Fluxus秘钥获取</h1>
   
-  <p>要获得您的HWID，请点击应用程序中的“获取密钥”按钮，并从HWID查询中复制数据.</p>
+  <p>要获取您的HWID，请点击应用程序中的“获取密钥”按钮，并从HWID查询中复制数据.</p>
   
   <input type="text" id="hwidInput" placeholder="输入你的HWID">
   <button id="bypassButton">获取</button>
@@ -35,21 +35,25 @@
   <div id="result"></div>
   
   <script>
-    document.getElementById("bypassButton").addEventListener("click", function() {
+    document.getElementById("bypassButton").addEventListener("click", async function() {
       var hwid = document.getElementById("hwidInput").value;
       if (hwid !== '') {
         document.getElementById("bypassButton").disabled = true;
         document.getElementById("bypassButton").textContent = "获取中...";
         document.getElementById("result").textContent = "";
         
-        var script = document.createElement('script');
-        script.src = 'index.js?hwid=' + hwid;
-        document.body.appendChild(script);
+        try {
+          var result = await import('./index.js').then(module => module.default(hwid));
+          responseFromIndexJs(result);
+        } catch (error) {
+          console.error(错误);
+          responseFromIndexJs("获取时出错.");
+        }
       }
     });
 
     function responseFromIndexJs(result) {
-      document.getElementById("bypassButton").textContent = "Bypass";
+      document.getElementById("bypassButton").textContent = "获取";
       document.getElementById("bypassButton").disabled = false;
       document.getElementById("result").textContent = result;
     }
