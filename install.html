@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Install Script</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("button").click(function() {
+        $("button").prop("disabled", true);
+        $("button").text("Installing...");
+        $.get("install.php", function(data) {
+          $("button").text("Installed!");
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Install Script</h1>
+  <button>Install</button>
+</body>
+</html>
