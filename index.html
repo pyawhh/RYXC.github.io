@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Fluxus Key Bypass</title>
+  <title>日月星辰工作室出品</title>
   <style>
     body {
       background-color: #000;
@@ -25,37 +25,33 @@
   </style>
 </head>
 <body>
-  <h1>Fluxus Key Bypass</h1>
-  <p>要获取您的HWID，请点击应用程序中的“获取密钥”按钮，并从HWID查询中复制数据.</p>
-  <p>日月星辰工作室出品.</p>
-  <p>例如: <code>https://flux.li/windows/start.php?HWID=XXXX</code> (复制全部XXXX)</p>
+  <h1>Fluxus秘钥获取</h1>
+  
+  <p>要获得您的HWID，请点击应用程序中的“获取密钥”按钮，并从HWID查询中复制数据.</p>
   
   <input type="text" id="hwidInput" placeholder="输入你的HWID">
-  <button id="bypassButton" onclick="bypassKey()">Bypass</button>
+  <button id="bypassButton">获取</button>
   
   <div id="result"></div>
   
   <script>
-    function bypassKey() {
+    document.getElementById("bypassButton").addEventListener("click", function() {
       var hwid = document.getElementById("hwidInput").value;
       if (hwid !== '') {
         document.getElementById("bypassButton").disabled = true;
         document.getElementById("bypassButton").textContent = "获取中...";
         document.getElementById("result").textContent = "";
         
-        fetch("index.js?hwid=" + encodeURIComponent(hwid))
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById("result").textContent = data;
-          })
-          .catch(() => {
-            document.getElementById("result").textContent = "获取失败...";
-          })
-          .finally(() => {
-            document.getElementById("bypassButton").disabled = false;
-            document.getElementById("bypassButton").textContent = "获取";
-          });
+        var script = document.createElement('script');
+        script.src = 'index.js?hwid=' + hwid;
+        document.body.appendChild(script);
       }
+    });
+
+    function responseFromIndexJs(result) {
+      document.getElementById("bypassButton").textContent = "Bypass";
+      document.getElementById("bypassButton").disabled = false;
+      document.getElementById("result").textContent = result;
     }
   </script>
 </body>
